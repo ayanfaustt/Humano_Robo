@@ -1,0 +1,49 @@
+class Random {
+    field int seed; 
+    field int chamadas;
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+    constructor Random new(int x) {
+        let chamadas = 0;
+        let seed = x;
+        let seed = rand();
+        return this;
+    }
+    method int rand() {
+        let seed = seed + 10000;
+        if (seed < 0) { let seed = seed - 20000- 1; }
+        return seed;
+    }
+    method int Troca() {
+        var int temp;
+        let chamadas = chamadas + 1;
+        let temp = chamadas;
+        while(temp > 9){ let temp = temp - 9;}
+        return temp;
+    }
+    method int randRange(int range) {
+        var int y;
+        var int z;
+        let y = 1;
+        let chamadas = chamadas + 1;
+
+        while (y < range) { let y = y * 2 + 1; }
+        let z = rand() & y;
+
+        while (z > range) {
+            let z = rand() & y;
+            let chamadas = chamadas + 1;
+            let z = z & Troca();
+        }
+        return z;
+    }
+
+
+    method void TempoChmd(int vezes){
+        let chamadas = chamadas + vezes;
+        return;
+    }
+}

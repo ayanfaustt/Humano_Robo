@@ -1,0 +1,107 @@
+class Main{
+	function void main(){
+		var Jogador Humano; 
+		var int PontuacaoHumano;
+		var boolean HumanoZero;
+
+		var Jogador Robo; 
+		var int PontuacaoComputador; 
+		var int JogadasCompt;
+
+		var Random random;
+		var char Comando; 
+
+		let Humano = Jogador.new();
+		let PontuacaoHumano = Humano.pontuacao();
+		let HumanoZero = false;
+
+		let Robo = Jogador.new();
+		let PontuacaoComputador = Robo.pontuacao();
+
+		let random = Random.new(123);
+
+
+		do Output.printString("Inicio da Partida ");
+		do Output.println();
+
+		while(~(PontuacaoHumano = 20) & ~(PontuacaoComputador = 20)){
+			do Output.println();
+			//
+			if(~HumanoZero){
+				do Output.printString("--------------------------");
+				do Output.println();
+				do Output.printString("Pontuacao do Humano:  ");
+				do Output.printInt(PontuacaoHumano);
+				do Output.println();
+				do Output.printString("Pontuacao do Robo: ");
+				do Output.printInt(PontuacaoComputador);
+				do Output.println();
+				do Output.printString("--------------------------");
+				do Output.println();
+				
+				do Output.printString("'h' para segurar a jogada ou 'r' para jogar ");
+				let Comando = Keyboard.readChar();
+				do Output.moveCursor(0,0);
+				do Screen.clearScreen();
+			}
+
+			if((Comando = 72) | (HumanoZero)){
+				let JogadasCompt = random.randRange(5);
+				do Humano.vrandom(JogadasCompt);
+				let HumanoZero = false;
+
+				while(JogadasCompt > 0){
+					do Output.printString("--------------------------");
+					do Output.println();
+					do Output.printString("Jogada do Robo: ");				
+					do Output.printInt(Robo.rodada());
+					do Output.println();
+					let JogadasCompt = JogadasCompt - 1;
+
+				}
+				do Output.printString("--------------------------");
+				do Output.println();
+				do Output.printString("Pontuacao atualizada do Robo: ");
+				let PontuacaoComputador = Robo.pontuacao();
+				do Output.printInt(PontuacaoComputador);
+				do Output.println();
+			}
+
+			if(Comando = 82){
+
+				do Output.printString("--------------------------");
+				do Output.println();
+				do Output.printString("Jogada do Humano:  ");
+				do Output.printInt(Humano.rodada());
+				do Output.println();
+				do Output.printString("Pontuacao atualizada do Humano:  ");
+				let PontuacaoHumano = Humano.pontuacao();
+				do Output.printInt(PontuacaoHumano);
+				do Output.println();
+				do Robo.vrandom(1);
+
+				if(PontuacaoHumano = 0){
+					let HumanoZero = true;
+					let Comando = 72;
+					do Output.printString("Voce zerou seus pontos, agora a vez do Robo. ");
+					do Output.println();
+				}
+			}
+		}
+		if(~(PontuacaoHumano < 20)){
+			do Output.printString("O Humano venceu a partida!");
+			do Output.printString("A Humanidade superou as maquinas :D");
+
+		}
+		if(~(PontuacaoComputador < 20)){
+			do Output.printString("O Robo venceu a partida!");
+			do Output.printString("As Maquinas domiram o mundo :/");
+		}
+		
+
+		do Humano.dispose();
+		do Robo.dispose();
+		return;
+		
+	}
+}

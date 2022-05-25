@@ -1,0 +1,29 @@
+class Jogador{
+	field int pontos;
+	field Random random;
+
+	method void dispose(){
+		do random.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+	constructor Jogador new(){
+		let random = Random.new(0);
+		let pontos = 0;
+		return this;
+	}	
+	method int rodada() {
+		var int num;
+		let num = random.randRange(4) + 1;
+		if(~(num = 1)){ let pontos = pontos + num;}
+		if(num = 1){ let pontos = 0;}
+		return num;
+	}
+	method void vrandom(int c){
+		do random.TempoChmd(c);
+		return;
+	}
+	method int pontuacao(){
+		return pontos;
+	}
+}
